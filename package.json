@@ -1,0 +1,28 @@
+{
+  "name": "money-flow-crud",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "start": "wrangler dev",
+    "create-dev-db": "npx wrangler d1 create money-flow-dev-db",
+    "create-prod-db": "npx wrangler d1 create money-flow-prod-db",
+    "generate-db": "drizzle-kit generate:sqlite",
+    "dev-apply-db": "wrangler d1 migrations apply money-flow-db --env dev",
+    "production-apply-db": "wrangler d1 migrations apply money-flow-db --env production",
+    "up-db": "drizzle-kit up:sqlite",
+    "drop-db": "drizzle-kit drop"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20231218.0",
+    "drizzle-kit": "^0.20.7",
+    "itty-router": "^3.0.12",
+    "typescript": "^5.0.4",
+    "wrangler": "^3.0.0"
+  },
+  "dependencies": {
+    "@cloudflare/itty-router-openapi": "^1.0.6",
+    "drizzle-orm": "^0.29.1"
+  }
+}
