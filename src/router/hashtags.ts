@@ -1,5 +1,6 @@
 import { OpenAPIRoute, Str, Int, Query } from '@cloudflare/itty-router-openapi'
 import { Env } from '../../worker-configuration';
+import { json } from 'itty-router-extras';
 
 const Hashtag = {
   id: new Int({ required: true, description: "Hashtag ID", example: 2892 }),
@@ -30,22 +31,23 @@ export class HashtagFetch extends OpenAPIRoute {
 
   async handle(request: Request, env: Env, context: any, data: any) {
     const { userId } = data.query;
+    return json(env.STORAGE_SERVICE.getHashtags(userId));
     // TODO: env.STORAGE_SERVICE usage
-    return {
-      hashtags: [{
-        id: 2892,
-        name: "Restaurant",
-        parentId: 122,
-        userId: userId,
-      },{
-        id: 2893,
-        name: "Entertainment",
-        userId: userId,
-      },{
-        id: 23,
-        name: "Taxi",
-        userId: userId,
-      },],
-    }
+    // return {
+    //   hashtags: [{
+    //     id: 2892,
+    //     name: "Restaurant",
+    //     parentId: 122,
+    //     userId: userId,
+    //   },{
+    //     id: 2893,
+    //     name: "Entertainment",
+    //     userId: userId,
+    //   },{
+    //     id: 23,
+    //     name: "Taxi",
+    //     userId: userId,
+    //   },],
+    // }
   }
 }

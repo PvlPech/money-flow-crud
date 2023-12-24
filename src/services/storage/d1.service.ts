@@ -1,15 +1,20 @@
+import { hashtags } from "../../../db/schema";
 import { Env } from "../../../worker-configuration";
+import { Hashtag } from "../../model/hashtag";
 import { StorageService } from "./storage.service";
 import { drizzle, type DrizzleD1Database } from 'drizzle-orm/d1';
 
 export class D1StorageService implements StorageService {
 
-    drizzleD1Db: DrizzleD1Database;
+    db: DrizzleD1Database;
 
     constructor(protected readonly env: Env) {
-        this.drizzleD1Db = drizzle(env.D1_DB);
+        this.db = drizzle(env.D1_DB);
     }
-    getHashtags(userId: number | undefined): void {
-        throw new Error("Method not implemented.");
+    async getHashtags(userId: number | undefined): Promise<Hashtag[]> {        
+        const query = this.db.select().from(hashtags);
+        console.log(query.toSQL());
+        const result = await query.all();
+        return result;
     }
 }
