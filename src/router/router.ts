@@ -1,6 +1,6 @@
 import { IRequest } from 'itty-router';
 import { OpenAPIRouter } from '@cloudflare/itty-router-openapi'
-import { IStorageService } from '../services/storage/storage.interface';
+import { StorageService } from '../services/storage/storage.service';
 import { HashtagFetch } from './hashtags';
 
 const router = OpenAPIRouter();

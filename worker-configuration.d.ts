@@ -1,8 +1,8 @@
-import { IStorageService } from "./src/services/storage/storage.interface";
+import { StorageService } from "./src/services/storage/storage.service";
 
 interface Env {
 	D1_DB: D1Database;
-	STORAGE_SERVICE: IStorageService;
+	STORAGE_SERVICE: StorageService;
 	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
 	// MY_KV_NAMESPACE: KVNamespace;
 	//
