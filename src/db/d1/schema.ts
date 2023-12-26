@@ -3,7 +3,8 @@
 // https://github.com/drizzle-team/drizzle-orm/blob/main/examples/cloudflare-d1/src/schema.ts
 // https://orm.drizzle.team/docs/indexes-constraints/#foreign-key
 // https://orm.drizzle.team/docs/rqb/#one-to-many
-import { relations, sql } from "drizzle-orm";
+// https://orm.drizzle.team/docs/goodies
+import { InferInsertModel, InferSelectModel, relations, sql } from "drizzle-orm";
 import { AnySQLiteColumn, index, integer, primaryKey, real, sqliteTable, text, unique } from "drizzle-orm/sqlite-core";
 
 export const users = sqliteTable("users", {
@@ -75,3 +76,12 @@ export const expensesToHashtagsRelations = relations(expensesToHashtags, ({ one 
         references: [hashtags.id],
     }),
 }));
+
+export type User = InferSelectModel<typeof users>;
+export type InsertUser = InferInsertModel<typeof users>;
+
+export type Hashtag = InferSelectModel<typeof hashtags>;
+export type InsertHashtag = InferInsertModel<typeof hashtags>;
+
+export type Expense = InferSelectModel<typeof expenses>;
+export type InsertExpense = InferInsertModel<typeof expenses>;

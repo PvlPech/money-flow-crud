@@ -4,16 +4,17 @@
   "private": true,
   "scripts": {
     "deploy": "wrangler deploy",
-    "dev-db": "npx wrangler d1 execute money-flow-db --local --file=./db/migrations/0000_blue_tiger_shark.sql --env dev",
-    "dev": "wrangler dev",
-    "start": "wrangler dev",
+    "dev-db": "npx wrangler d1 execute money-flow-db --env dev --local --file=./src/db/d1/migrations/0000_blue_tiger_shark.sql",
+    "dev-db-command": "wrangler d1 execute money-flow-db --env dev --local --command \"select * from users;\"",
+    "dev": "wrangler dev --env dev",
+    "start": "wrangler dev --env dev",
     "create-dev-db": "npx wrangler d1 create money-flow-dev-db",
     "create-prod-db": "npx wrangler d1 create money-flow-prod-db",
     "generate-db": "drizzle-kit generate:sqlite",
     "dev-apply-db": "wrangler d1 migrations apply money-flow-db --env dev",
     "production-apply-db": "wrangler d1 migrations apply money-flow-db --env production",
     "up-db": "drizzle-kit up:sqlite",
-    "drop-db": "drizzle-kit drop"
+    "drop-db": "drizzle-kit drop"    
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231218.0",

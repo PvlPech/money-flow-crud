@@ -21,5 +21,7 @@ https://github.com/drizzle-team/drizzle-orm/blob/main/examples/cloudflare-d1/src
 https://orm.drizzle.team/docs/indexes-constraints/#foreign-key
 
 https://orm.drizzle.team/docs/rqb/#one-to-many
+
+https://orm.drizzle.team/docs/goodies#type-api - to return the corresponding types
 ### itty-router-extras
 https://github.com/kwhitley/itty-router-extras

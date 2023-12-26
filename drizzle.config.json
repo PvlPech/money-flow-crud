@@ -1,6 +1,6 @@
 {
-    "out": "db/migrations",
-    "schema": "db/schema.ts",
+    "out": "src/db/d1/migrations",
+    "schema": "src/db/d1/schema.ts",
     "verbose": true,
     "strict": true
 }

@@ -6,13 +6,13 @@ node_compat = true
 # This is a dev environment
 [env.dev]
 d1_databases = [
-    { binding = "D1_DB", database_name = "money-flow-db", database_id = "da0a49fb-1b81-41ce-ba8e-031c225187ff", migrations_dir = "db/migrations" },
+    { binding = "D1_DB", database_name = "money-flow-db", database_id = "da0a49fb-1b81-41ce-ba8e-031c225187ff", migrations_dir = "src/db/d1/migrations" },
 ]
 
 # This is a production environment
 [env.production]
 d1_databases = [
-    { binding = "D1_DB", database_name = "money-flow-db", database_id = "2e27312f-3d43-4b0f-a2c7-c88297b28a6b", migrations_dir = "db/migrations" },
+    { binding = "D1_DB", database_name = "money-flow-db", database_id = "2e27312f-3d43-4b0f-a2c7-c88297b28a6b", migrations_dir = "src/db/d1/migrations" },
 ]
 
 # Variable bindings. These are arbitrary, plaintext strings (similar to environment variables)

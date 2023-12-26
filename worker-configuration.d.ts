@@ -1,4 +1,4 @@
-import { StorageService } from "./src/services/storage/storage.service";
+import { StorageService } from "./src/services/storage/storage.interface";
 
 interface Env {
 	D1_DB: D1Database;

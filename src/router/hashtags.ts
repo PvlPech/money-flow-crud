@@ -1,6 +1,5 @@
 import { OpenAPIRoute, Str, Int, Query } from '@cloudflare/itty-router-openapi'
 import { Env } from '../../worker-configuration';
-import { json } from 'itty-router-extras';
 
 const Hashtag = {
   id: new Int({ required: true, description: "Hashtag ID", example: 2892 }),
@@ -12,42 +11,47 @@ const Hashtag = {
 export class HashtagFetch extends OpenAPIRoute {
   static schema = {
     tags: ["Hashtags"],
-    summary: "Get hashtags by user (optionally)",    
+    summary: "Get hashtags",    
     parameters: {
       userId: Query(Int, {
-        required: false,
+        required: true,
         example: -6033471599,        
       }),
     },
     responses: {
       "200": {
         description: "Hashtag response",
-        schema: {
-          hashtags: [Hashtag],
-        },
+        schema: [Hashtag],
       },
     },
   }
 
   async handle(request: Request, env: Env, context: any, data: any) {
     const { userId } = data.query;
-    return json(env.STORAGE_SERVICE.getHashtags(userId));
-    // TODO: env.STORAGE_SERVICE usage
-    // return {
-    //   hashtags: [{
-    //     id: 2892,
-    //     name: "Restaurant",
-    //     parentId: 122,
-    //     userId: userId,
-    //   },{
-    //     id: 2893,
-    //     name: "Entertainment",
-    //     userId: userId,
-    //   },{
-    //     id: 23,
-    //     name: "Taxi",
-    //     userId: userId,
-    //   },],
-    // }
+    return env.STORAGE_SERVICE.getHashtags(userId);
+  }
+}
+
+export class HashtagCreate extends OpenAPIRoute {
+  static schema = {
+    tags: ["Hashtags"],
+    summary: "Create a hashtag",    
+    requestBody: {
+      id: new Int({ required: false, description: "Hashtag ID", example: 2892 }),
+      name: new Str({ required: true, description: "Hashtag Name", example: "Restaurant" }),
+      parentId: new Int({ required: false, description: "Parent Hashtag ID", example: 122 }),
+      userId: new Int({ required: true, description: "Hashtag Owner ID", example: -6033471599 }),
+    },
+    responses: {
+      "200": {
+        description: "Hashtags response",
+        schema: Hashtag,
+      },
+    },
+  }
+
+  async handle(request: Request, env: Env, context: any, data: any) {
+    const newHashtag = data.body;
+    return env.STORAGE_SERVICE.createHashtag(newHashtag);
   }
 }
