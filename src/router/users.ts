@@ -37,7 +37,7 @@ export class UserCreate extends OpenAPIRoute {
     summary: "Create a user",    
     requestBody: {
       id: new Int({required: true, description: "User ID", example: 2892}),
-      name: new Str({required: true, description: "User Name", example: "Tom2892as"})
+      name: new Str({required: true, description: "User Name", example: "Tomas"})
     },
     responses: {
       "200": {

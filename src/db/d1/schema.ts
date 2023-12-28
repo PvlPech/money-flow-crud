@@ -13,75 +13,61 @@ export const users = sqliteTable("users", {
 });
 
 export const userRelations = relations(users, ({ many }) => ({
-    hashtags: many(hashtags),
+    categories: many(categories),
     expenses: many(expenses),
 }));
   
-export const hashtags = sqliteTable("hashtags", {
+export const categories = sqliteTable("categories", {
 	id: integer("id").primaryKey({ autoIncrement: true }),
 	name: text("name").notNull(),
-    parentId: integer("parent_id").references((): AnySQLiteColumn => hashtags.id, { onDelete: "set null" }),
-    userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-}, (hashtags) => ({
-    parentIdx: index("parent_idx").on(hashtags.parentId, hashtags.userId),
-    nameIdx: index("name_idx").on(hashtags.name, hashtags.userId),
+    parentId: integer("parent_id").references((): AnySQLiteColumn => categories.id, { onDelete: "set null" }),
+    userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),    
+}, (categories) => ({
+    parentIdx: index("parent_idx").on(categories.parentId, categories.userId),
+    nameIdx: index("name_idx").on(categories.name, categories.userId),
     nameUniqueConstraint: unique("name_unique_constraint").on(
-        hashtags.name,
-        hashtags.userId
+        categories.name,
+        categories.userId
       ),
 }));
 
-export const hashtagsRelations = relations(hashtags, ({ one, many }) => ({
+export const categoriesRelations = relations(categories, ({ one, many }) => ({
     users: one(users, {
-      fields: [hashtags.userId],
+      fields: [categories.userId],
       references: [users.id],
     }),
-    expensesToHashtags: many(expensesToHashtags),
+    expenses: many(expenses),
 }));
 
 export const expenses = sqliteTable("expenses", {
     id: integer("id").primaryKey({autoIncrement: true}),
     userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-    messageId: integer("message_id").notNull(),
+    messageId: integer("message_id"),
     amount: real("amount").notNull(),
     description: text("description"),
-    date: text("date").default(sql`CURRENT_DATE`),     
+    date: text("date").default(sql`CURRENT_DATE`),
+    categoryId: integer("category_id").notNull().references(() => categories.id, { onDelete: "restrict" }),     
 }, (expenses) => ({
-    dateIdx: index("date_idx").on(expenses.date, expenses.userId),        
+    dateIdx: index("date_idx").on(expenses.date, expenses.userId), 
+    categoryIdx: index("category_idx").on(expenses.categoryId, expenses.userId),       
 }));
 
-export const expensesRelations = relations(expenses, ({ one, many }) => ({
+export const expensesRelations = relations(expenses, ({ one }) => ({
     users: one(users, {
         fields: [expenses.userId],
         references: [users.id],
     }),
-    expensesToHashtags: many(expensesToHashtags),
-}));
-
-export const expensesToHashtags = sqliteTable("expenses_to_hashtags", {
-    expenseId: integer("expense_id").notNull().references(() => expenses.id, { onDelete: "cascade" }),
-    hashtagId: integer("hashtag_id").notNull().references(() => hashtags.id, { onDelete: "cascade" }),
-  }, (expensesToHashtags) => ({
-    pk: primaryKey({columns: [expensesToHashtags.expenseId, expensesToHashtags.hashtagId]}),
-  }),
-);
-
-export const expensesToHashtagsRelations = relations(expensesToHashtags, ({ one }) => ({
-    expenses: one(expenses, {
-        fields: [expensesToHashtags.expenseId],
-        references: [expenses.id],
-    }),
-    hashtags: one(hashtags, {
-        fields: [expensesToHashtags.hashtagId],
-        references: [hashtags.id],
+    categories: one(categories, {
+        fields: [expenses.categoryId],
+        references: [categories.id],
     }),
 }));
 
 export type User = InferSelectModel<typeof users>;
 export type InsertUser = InferInsertModel<typeof users>;
 
-export type Hashtag = InferSelectModel<typeof hashtags>;
-export type InsertHashtag = InferInsertModel<typeof hashtags>;
+export type Category = InferSelectModel<typeof categories>;
+export type InsertCategory = InferInsertModel<typeof categories>;
 
 export type Expense = InferSelectModel<typeof expenses>;
 export type InsertExpense = InferInsertModel<typeof expenses>;

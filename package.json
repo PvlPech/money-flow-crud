@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "deploy": "wrangler deploy",
-    "dev-db": "npx wrangler d1 execute money-flow-db --env dev --local --file=./src/db/d1/migrations/0000_blue_tiger_shark.sql",
-    "dev-db-command": "wrangler d1 execute money-flow-db --env dev --local --command \"select * from users;\"",
+    "dev-db": "npx wrangler d1 execute money-flow-db --env dev --local --file=./src/db/d1/migrations/0000_nappy_sphinx.sql",
+    "dev-db-delete": "wrangler d1 delete money-flow-db --env dev --local",
+    "dev-db-command": "wrangler d1 execute money-flow-db --env dev --local --command \"select count(*) from users;\"",
     "dev": "wrangler dev --env dev",
     "start": "wrangler dev --env dev",
     "create-dev-db": "npx wrangler d1 create money-flow-dev-db",

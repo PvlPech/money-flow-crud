@@ -6,7 +6,7 @@ node_compat = true
 # This is a dev environment
 [env.dev]
 d1_databases = [
-    { binding = "D1_DB", database_name = "money-flow-db", database_id = "da0a49fb-1b81-41ce-ba8e-031c225187ff", migrations_dir = "src/db/d1/migrations" },
+    { binding = "D1_DB", database_name = "money-flow-db", database_id = "710e4b5f-8e91-4803-b41b-0a54916209bc", migrations_dir = "src/db/d1/migrations" },
 ]
 
 # This is a production environment
